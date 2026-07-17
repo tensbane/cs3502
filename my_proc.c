@@ -39,15 +39,14 @@ ssize_t write_proc(struct file *f, const char *user_buf, size_t count, loff_t *o
         return count;
 }
 
-struct file_operations proc_fops = {
-        .read = read_proc,
-        .write = write_proc,
+static const struct proc_ops proc_fops = {
+        .proc_read = read_proc,
+        .proc_write = write_proc,
 };
 
 int init_module(void)
 {
         int ret = 0;
-
         info = kmalloc(MAX_LEN, GFP_KERNEL);
         if (!info) {
                 printk(KERN_INFO "Failed to allocate memory.\n");
